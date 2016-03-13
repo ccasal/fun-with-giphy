@@ -1,6 +1,5 @@
 //stroage for animals
 var animalSet = [];
-var firstRun = true;
 //takes in user response and send it to the giphy api
 $('#findAnimal').on('click', function(){
 	var userAnimal = $('#getAnimal').val().trim();
@@ -32,9 +31,9 @@ function displayAnimalImages(){
 	//use ajax here to get data from the the buttons and send
 	//to the api
 	$.ajax({url:queryURL, method:'GET'}).done(function(response){
-		if(firstRun == false){
-			$('#imageContainer').empty();
-		}
+
+		$('#imageContainer').empty();
+
 		for(i = 0; i < response.data.length; i++){
 			var gifRating = response.data[i].rating;
 			var gifURL = response.data[i].images.fixed_width.url;
@@ -48,7 +47,6 @@ function displayAnimalImages(){
 			newDiv.append(renderedImg);
 			$('#imageContainer').append(newDiv);
 		}
-		firstRun = false;
 	});
 }
 function imageRender(count, url, still){
