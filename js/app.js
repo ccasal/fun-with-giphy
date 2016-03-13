@@ -1,12 +1,13 @@
-//stroage for animals
 var animalSet = [];
-//takes in user response and send it to the giphy api
+
+//takes in user response and sends it to the giphy api
 $('#findAnimal').on('click', function(){
 	var userAnimal = $('#getAnimal').val().trim();
 	//store animal in array
 	animalSet.push(userAnimal);
+	$('#getAnimal').val('');
 	//get the entered animal in the array and make it a button
-	makeButton(animalSet[animalSet.length-1])
+	makeButton(animalSet[animalSet.length-1]);
 	//add url for button?
 	return false;//to not refresh the page
 });
@@ -24,12 +25,11 @@ function makeButton(woof){
 	newDiv.append(newButton);
 	$('#animalButtonSection').append(newDiv);
 }
-//display images
+
 function displayAnimalImages(){
 	var animal = $(this).attr('data-name');
 	var queryURL = "http://api.giphy.com/v1/gifs/search?limit=10&q=funny+" + animal + "&api_key=dc6zaTOxFJmzC"
-	//use ajax here to get data from the the buttons and send
-	//to the api
+
 	$.ajax({url:queryURL, method:'GET'}).done(function(response){
 
 		$('#imageContainer').empty();
@@ -38,11 +38,12 @@ function displayAnimalImages(){
 			var gifRating = response.data[i].rating;
 			var gifURL = response.data[i].images.fixed_width.url;
 			var gifStill = response.data[i].images.fixed_width_still.url;
+			
 			//create div container
 			var newDiv = $('<div class="col-md-4">');
 			newDiv.attr('id', 'imgDiv' + i);
 			newDiv.text('Rating: ' + gifRating);
-			// $('#imgDiv' + i).text('Rating: ' + gifRating);
+
 			var renderedImg = imageRender(i,gifURL,gifStill);
 			newDiv.append(renderedImg);
 			$('#imageContainer').append(newDiv);
